@@ -67,11 +67,9 @@ The target machine IP address was identified as:
 
 ---
 
-## 🔎 Enumeration
+## 🔎 Reconnaissance
 
-### Nmap Scan
-
-Perform a full TCP port scan.
+First, perform a full TCP port scan against the target using Nmap.
 
 ```bash
 nmap -n -Pn -sS -p- --min-rate 5000 192.168.102.142
