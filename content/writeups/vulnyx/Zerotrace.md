@@ -1,5 +1,5 @@
 ---
-title: "ZeroTrace | VulNyx Writeup"
+title: "Zerotrace | VulNyx Writeup"
 date: 2026-08-29T21:41:57+05:30
 description: "VulNyx ZeroTrace writeup covering web enumeration, hidden administrative files, Local File Inclusion, process enumeration through /proc, FTP credential disclosure, SSH access, cron-based lateral movement, immutable file attributes, Ethereum keystore cracking, password construction, lateral movement, and sudo-based privilege escalation."
 summary: "Compromised the ZeroTrace machine by discovering a hidden .admin directory and exploiting LFI to enumerate /proc processes, recovering FTP credentials from command-line arguments, gaining SSH access as J4ckie0x17, abusing an immutable but writable scheduled script to obtain a shell as shelldredd, cracking an Ethereum keystore to derive a password pattern, moving laterally to ll104567, and achieving root through a writable script allowed by a misconfigured sudo rule."
