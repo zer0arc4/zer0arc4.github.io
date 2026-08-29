@@ -4,7 +4,7 @@ date: 2026-08-29T00:57:11+05:30
 description: "VulNyx Trace writeup covering NFS enumeration, exposed web files, subdomain discovery, PHP authentication bypass, command injection, reverse shell access, credential disclosure, lateral movement, and privilege escalation through Octave and Wuzz."
 summary: "Compromised the Trace machine by enumerating an exposed NFS share, discovering internal domains, bypassing a PHP authentication check, exploiting command injection for a reverse shell as www-data, recovering credentials for yan, escalating to nel through Octave, and achieving root access by abusing Wuzz to enable SUID Bash."
 platform: "vulnyx"
-difficulty: "easy"
+difficulty: "hard"
 os: "Linux"
 status: "active"
 featured: true
