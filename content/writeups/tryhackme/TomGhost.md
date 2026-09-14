@@ -342,9 +342,10 @@ merlin:asuyusdoiuqoilkda312j31k2j123j1g23g12k3g12kj3gk12jg3k12j3kj123j
 
 Another set of credentials is recovered.
 
-| Username | Password |
-|----------|----------|
-| merlin | asuyusdoiuqoilkda312j31k2j123j1g23g12k3g12kj3gk12jg3k12j3kj123j |
+```
+Username : merlin  
+Password : asuyusdoiuqoilkda312j31k2j123j1g23g12k3g12kj3gk12jg3k12j3kj123j 
+```
 
 ---
 
