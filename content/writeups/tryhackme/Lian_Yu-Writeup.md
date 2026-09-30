@@ -8,7 +8,7 @@ difficulty: "easy"
 os: "Linux"
 status: "active"
 featured: false
-featured_image: "/images/writeups/tryhackme/Lian_Yu.jpg"
+featured_image: "/images/writeups/tryhackme/Lian_Yu.png"
 tags: ["linux", "ftp", "steganography", "enumeration", "privilege-escalation"]
 skills: ["nmap", "gobuster", "ftp", "stegseek", "ssh"]
 comments: false
@@ -17,7 +17,7 @@ draft: false
 
 > A beginner level security challenge.
 
-<img width="842" height="438" alt="image" src="/images/writeups/tryhackme/Lian_Yu.jpg" />
+<img width="842" height="438" alt="image" src="/images/writeups/tryhackme/Lian_Yu.png" />
 
 ---
 

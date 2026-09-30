@@ -9,7 +9,7 @@ difficulty: "easy"
 os: "Linux"
 status: "active"
 featured: true
-featured_image: "/images/writeups/tryhackme/Billing.jpg"
+featured_image: "/images/writeups/tryhackme/Billing.png"
 tags: ["linux", "magnusbilling", "cve-2023-30258", "command-injection", "rce", "remote-code-execution", "reverse-shell", "asterisk", "tty", "sudo", "fail2ban", "fail2ban-client", "sudo-misconfiguration", "suid", "bash", "privilege-escalation"]
 skills: ["nmap", "web-enumeration", "magnusbilling", "cve-2023-30258", "python", "rce", "netcat", "reverse-shell", "tty-upgrade", "linux-enumeration", "sudo", "fail2ban", "fail2ban-client", "suid", "bash", "privilege-escalation"]
 comments: false
@@ -18,7 +18,7 @@ draft: false
 
 ## Overview
 
-<img width="842" height="438" alt="billing-tryhackme" src="/images/writeups/tryhackme/Billing.jpg" />
+<img width="842" height="438" alt="billing-tryhackme" src="/images/writeups/tryhackme/Billing.png" />
 
 Billing is an easy TryHackMe machine that focuses on MagnusBilling enumeration, unauthenticated command injection, remote code execution, reverse shell access, sudo misconfiguration, Fail2Ban abuse, and SUID-based privilege escalation.
 

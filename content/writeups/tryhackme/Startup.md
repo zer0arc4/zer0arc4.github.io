@@ -8,7 +8,7 @@ difficulty: "easy"
 os: "Linux"
 status: "active"
 featured: true
-featured_image: "/images/writeups/tryhackme/Startup.jpg"
+featured_image: "/images/writeups/tryhackme/Startup.png"
 tags: ["linux", "ftp", "file-upload", "rce", "pcap", "cron", "privilege-escalation"]
 skills: ["nmap", "ftp", "gobuster", "netcat", "wireshark", "pspy64"]
 comments: false
@@ -17,7 +17,7 @@ draft: false
 
 ## Overview
 
-<img width="842" height="438" alt="image" src="/images/writeups/tryhackme/Startup.jpg" />
+<img width="842" height="438" alt="image" src="/images/writeups/tryhackme/Startup.png" />
 
 Startup is an easy TryHackMe machine that demonstrates how a writable anonymous FTP share can lead to Remote Code Execution through arbitrary file uploads. After obtaining an initial shell, packet capture analysis reveals SSH credentials for a local user. The final privilege escalation abuses a root cron job that executes a writable script, allowing the attacker to set the SUID bit on Bash and gain full root access.
 

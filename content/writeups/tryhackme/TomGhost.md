@@ -8,7 +8,7 @@ difficulty: "easy"
 os: "Linux"
 status: "active"
 featured: true
-featured_image: "/images/writeups/tryhackme/TomGoast.jpg"
+featured_image: "/images/writeups/tryhackme/TomGhost.png"
 tags: ["linux", "ghostcat", "apache-tomcat", "gpg", "gtfobins", "privilege-escalation"]
 skills: ["nmap", "ajpshooter", "john", "gpg", "ssh", "gtfobins"]
 comments: false
@@ -17,7 +17,7 @@ draft: false
 
 ## Overview
 
-<img width="842" height="438" alt="image" src="/images/writeups/tryhackme/TomGoast.jpg" />
+<img width="842" height="438" alt="image" src="/images/writeups/tryhackme/TomGhost.png" />
 
 TomGhost is an easy TryHackMe machine that focuses on exploiting the Ghostcat (CVE-2020-1938) vulnerability in Apache Tomcat. The attack chain involves reading sensitive configuration files through the exposed AJP connector, recovering SSH credentials, cracking a GPG private key passphrase to obtain additional credentials, and finally escalating privileges by abusing a misconfigured sudo permission on the `zip` binary.
 
