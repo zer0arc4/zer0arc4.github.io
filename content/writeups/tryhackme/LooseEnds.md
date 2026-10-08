@@ -43,7 +43,7 @@ LooseEnds is a medium TryHackMe machine that focuses on Vvveb CMS enumeration, s
 
 ## 🔎 Network Discovery
 
-First, scan the target for open ports and running services using Nmap.
+First, scan the target for open ports and running services using Nmap..
 
 ```bash
 nmap -n -Pn -sVC -p- --min-rate 5000 192.168.1.99
