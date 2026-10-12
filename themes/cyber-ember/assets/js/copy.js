@@ -1,3 +1,4 @@
+
 (function () {
   'use strict';
 
@@ -5,6 +6,7 @@
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text);
     }
+
     const ta = document.createElement('textarea');
     ta.value = text;
     ta.setAttribute('readonly', '');
@@ -12,33 +14,53 @@
     ta.style.left = '-9999px';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); } finally { document.body.removeChild(ta); }
+
+    try {
+      document.execCommand('copy');
+    } finally {
+      document.body.removeChild(ta);
+    }
+
     return Promise.resolve();
   }
 
   function flash(el, label) {
     const prev = el.getAttribute('data-label') || el.textContent;
     el.textContent = label;
-    window.setTimeout(() => { el.textContent = prev; }, 1600);
+    window.setTimeout(() => {
+      el.textContent = prev;
+    }, 1600);
   }
 
   function enhanceCodeBlocks() {
-    document.querySelectorAll('.prose-ember pre, .terminal-window pre').forEach((pre) => {
-      if (pre.parentElement && pre.parentElement.classList.contains('code-block')) return;
+    document.querySelectorAll(
+      '.prose-ember pre, .terminal-window pre'
+    ).forEach((pre) => {
+      if (
+        pre.parentElement &&
+        pre.parentElement.classList.contains('code-block')
+      ) {
+        return;
+      }
+
       const wrap = document.createElement('div');
       wrap.className = 'code-block';
       pre.parentNode.insertBefore(wrap, pre);
       wrap.appendChild(pre);
+
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'code-copy';
       btn.setAttribute('data-label', 'Copy');
       btn.textContent = 'Copy';
       btn.setAttribute('aria-label', 'Copy code');
+
       btn.addEventListener('click', () => {
         const code = pre.querySelector('code');
-        copyText((code || pre).innerText.replace(/\n$/, '')).then(() => flash(btn, 'Copied'));
+        copyText((code || pre).innerText.replace(/\n$/, ''))
+          .then(() => flash(btn, 'Copied'));
       });
+
       wrap.appendChild(btn);
     });
   }
@@ -53,98 +75,229 @@
 
       function showNotification(msg, isError) {
         if (!notification) return;
+
         notification.textContent = msg;
-        notification.classList.remove('opacity-0', 'text-ember-soft', 'text-red-400', 'text-green-400');
-        notification.classList.add(isError ? 'text-red-400' : 'text-ember-soft', 'opacity-100');
+
+        notification.classList.remove(
+          'opacity-0',
+          'text-ember-soft',
+          'text-red-400',
+          'text-green-400'
+        );
+
+        notification.classList.add(
+          isError ? 'text-red-400' : 'text-ember-soft',
+          'opacity-100'
+        );
+
         clearTimeout(notifyTimeout);
+
         notifyTimeout = setTimeout(() => {
           notification.classList.remove('opacity-100');
           notification.classList.add('opacity-0');
         }, 3500);
       }
 
-      // Synchronize dynamic URLs for native share links
+      // Current page URL and title
       const currentUrl = window.location.href;
       const currentTitle = document.title || '';
 
-      const linkedinBtn = section.querySelector('[data-share-channel="linkedin"]');
+      // LinkedIn
+      const linkedinBtn = section.querySelector(
+        '[data-share-channel="linkedin"]'
+      );
+
       if (linkedinBtn) {
-        linkedinBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`;
+        linkedinBtn.href =
+          `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`;
       }
 
-      const xBtn = section.querySelector('[data-share-channel="x"]');
+      // X
+      const xBtn = section.querySelector(
+        '[data-share-channel="x"]'
+      );
+
       if (xBtn) {
-        xBtn.href = `https://x.com/intent/post?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`;
+        xBtn.href =
+          `https://x.com/intent/post?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`;
       }
 
-      const telegramBtn = section.querySelector('[data-share-channel="telegram"]');
+      // Telegram
+      const telegramBtn = section.querySelector(
+        '[data-share-channel="telegram"]'
+      );
+
       if (telegramBtn) {
-        telegramBtn.href = `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`;
+        telegramBtn.href =
+          `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`;
       }
 
-      // Discord
-      const discordBtn = section.querySelector('[data-share-channel="discord"]');
-      if (discordBtn) {
-        discordBtn.addEventListener('click', () => {
-          copyText(window.location.href)
+      // WhatsApp: share the current page URL and title
+      const whatsappBtn = section.querySelector(
+        '[data-share-channel="whatsapp"]'
+      );
+
+      if (whatsappBtn) {
+        const message = `${currentTitle} ${currentUrl}`;
+
+        whatsappBtn.href =
+          `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+      }
+
+      // Instagram: copy the current page URL and open Instagram
+      const instagramBtn = section.querySelector(
+        '[data-share-channel="instagram"]'
+      );
+
+      if (instagramBtn) {
+        instagramBtn.addEventListener('click', () => {
+          copyText(currentUrl)
             .then(() => {
-              showNotification('Link copied to clipboard! Opening Discord to paste in your server or message.', false);
+              showNotification(
+                'Page URL copied! Paste it into your Instagram post or Story.',
+                false
+              );
             })
             .catch(() => {
-              showNotification('Opening Discord. You can copy the URL directly from your browser bar.', false);
+              showNotification(
+                'Copy failed. Copy the page URL from your browser address bar.',
+                true
+              );
             });
         });
       }
 
-      // GitHub
-      const githubBtn = section.querySelector('[data-share-channel="github"]');
-      if (githubBtn) {
-        githubBtn.addEventListener('click', () => {
-          copyText(window.location.href)
+      // Discord: copy the current page URL
+      const discordBtn = section.querySelector(
+        '[data-share-channel="discord"]'
+      );
+
+      if (discordBtn) {
+        discordBtn.addEventListener('click', () => {
+          copyText(currentUrl)
             .then(() => {
-              showNotification('Link copied to clipboard! Opening GitHub repository.', false);
+              showNotification(
+                'Link copied! Paste it into your Discord server or message.',
+                false
+              );
             })
             .catch(() => {
-              showNotification('Opening GitHub. You can copy the URL directly from your browser bar.', false);
+              showNotification(
+                'Opening Discord. Copy the URL from your browser address bar.',
+                true
+              );
+            });
+        });
+      }
+
+      // GitHub: copy the current page URL
+      const githubBtn = section.querySelector(
+        '[data-share-channel="github"]'
+      );
+
+      if (githubBtn) {
+        githubBtn.addEventListener('click', () => {
+          copyText(currentUrl)
+            .then(() => {
+              showNotification(
+                'Link copied! Paste it wherever you want to share it on GitHub.',
+                false
+              );
+            })
+            .catch(() => {
+              showNotification(
+                'Opening GitHub. Copy the URL from your browser address bar.',
+                true
+              );
             });
         });
       }
 
       // Copy Link Button
-      const copyBtn = section.querySelector('[data-share-channel="copy"]');
+      const copyBtn = section.querySelector(
+        '[data-share-channel="copy"]'
+      );
+
       if (copyBtn) {
         const labelEl = copyBtn.querySelector('.share-btn-label');
         const defaultIcon = copyBtn.querySelector('.share-icon-default');
         const successIcon = copyBtn.querySelector('.share-icon-success');
-        const originalLabel = labelEl ? labelEl.textContent : 'Copy Link';
+
+        const originalLabel = labelEl
+          ? labelEl.textContent
+          : 'Copy Link';
+
         let copyTimeout = null;
 
         copyBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          copyText(window.location.href)
+
+          copyText(currentUrl)
             .then(() => {
               copyBtn.classList.add('share-btn-copied');
-              if (labelEl) labelEl.textContent = 'Copied!';
-              if (defaultIcon) defaultIcon.classList.add('hidden');
+
+              if (labelEl) {
+                labelEl.textContent = 'Copied!';
+              }
+
+              if (defaultIcon) {
+                defaultIcon.classList.add('hidden');
+              }
+
+              if (successIcon) {
+                successIcon.classList.remove('hidden');
+              }
+
               copyBtn.setAttribute('title', 'Link copied!');
               copyBtn.setAttribute('aria-label', 'Link copied!');
-              showNotification('Link copied to clipboard!', false);
+
+              showNotification(
+                'Link copied to clipboard!',
+                false
+              );
 
               clearTimeout(copyTimeout);
+
               copyTimeout = setTimeout(() => {
                 copyBtn.classList.remove('share-btn-copied');
-                if (labelEl) labelEl.textContent = originalLabel;
-                if (defaultIcon) defaultIcon.classList.remove('hidden');
-                if (successIcon) successIcon.classList.add('hidden');
-                copyBtn.setAttribute('title', 'Copy link to clipboard');
-                copyBtn.setAttribute('aria-label', 'Copy link to clipboard');
+
+                if (labelEl) {
+                  labelEl.textContent = originalLabel;
+                }
+
+                if (defaultIcon) {
+                  defaultIcon.classList.remove('hidden');
+                }
+
+                if (successIcon) {
+                  successIcon.classList.add('hidden');
+                }
+
+                copyBtn.setAttribute(
+                  'title',
+                  'Copy link to clipboard'
+                );
+
+                copyBtn.setAttribute(
+                  'aria-label',
+                  'Copy link to clipboard'
+                );
               }, 2000);
             })
             .catch(() => {
-              if (labelEl) labelEl.textContent = 'Failed';
-              showNotification('Unable to copy automatically. Please copy the URL from your browser address bar.', true);
+              if (labelEl) {
+                labelEl.textContent = 'Failed';
+              }
+
+              showNotification(
+                'Unable to copy automatically. Copy the URL from your browser address bar.',
+                true
+              );
+
               setTimeout(() => {
-                if (labelEl) labelEl.textContent = originalLabel;
+                if (labelEl) {
+                  labelEl.textContent = originalLabel;
+                }
               }, 2500);
             });
         });
