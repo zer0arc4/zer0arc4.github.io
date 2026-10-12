@@ -67,7 +67,7 @@ commands:
 
   ls:
     output: |
-      about/  activity/  blog/  contact/  notes/
+      about/  activity/  contact/  notes/
       projects/  research/  writeups/
 
   pwd:

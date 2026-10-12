@@ -1,6 +1,6 @@
 # zer0arc4 — Cybersecurity Portfolio
 
-Personal cybersecurity portfolio, technical blog, writeup repository, and knowledge base for **zer0arc4**.
+Personal cybersecurity portfolio, writeup repository, and knowledge base for **zer0arc4**.
 
 **Live Site:** [https://zer0arc4.github.io/](https://zer0arc4.github.io/)
 
@@ -57,7 +57,6 @@ zer0arc4/zer0arc4.github.io
 content/
 ├── writeups/     → HTB, THM, Vulnyx, HackMyVM, PG, CTF
 ├── projects/     → Security tools and dev projects
-├── blog/         → Technical articles
 ├── activity/     → Full activity history (auto-generated)
 ├── notes/        → Hidden from nav, available for future use
 ├── certifications/
@@ -68,12 +67,11 @@ content/
 
 ```bash
 hugo new writeups/hackthebox/machine-name.md
-hugo new blog/post-title.md
 hugo new projects/project-name.md
 hugo new certifications/cert-name.md
 ```
 
-New writeups, projects, blog posts, and certifications automatically appear in the Activity Timeline.
+New writeups, projects, and certifications automatically appear in the Activity Timeline.
 
 ## License
 

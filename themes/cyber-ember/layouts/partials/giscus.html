@@ -1,8 +1,6 @@
 {{- $showComments := false -}}
 {{- if .Site.Params.comments.enabled -}}
-  {{- if eq .Section "blog" -}}
-    {{- $showComments = .Params.comments | default .Site.Params.comments.blog_default -}}
-  {{- else if eq .Section "notes" -}}
+  {{- if eq .Section "notes" -}}
     {{- $showComments = .Params.comments | default .Site.Params.comments.notes_default -}}
   {{- else if or (eq .Section "writeups") (and .File (hasPrefix .File.Dir "writeups/")) -}}
     {{- $showComments = .Params.comments | default .Site.Params.comments.writeups_default -}}

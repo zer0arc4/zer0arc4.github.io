@@ -19,8 +19,7 @@
           <span class="badge bg-ember-bg-secondary text-text-muted">{{ . }}</span>
           {{ end }}
         </div>
-        <h1 class="text-4xl font-bold text-text-primary mb-4 pr-10">{{ .Title }}</h1>
-        {{ partial "share-link.html" . }}
+        <h1 class="text-4xl font-bold text-text-primary mb-4">{{ .Title }}</h1>
         <div class="flex flex-wrap items-center gap-4 text-sm text-text-muted">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
           <span>{{ .ReadingTime }} min read</span>
@@ -44,6 +43,7 @@
       </div>
 
       {{ partial "author-box.html" . }}
+      {{ partial "share-section.html" . }}
       {{ partial "related-posts.html" . }}
       {{ partial "giscus.html" . }}
     </div>

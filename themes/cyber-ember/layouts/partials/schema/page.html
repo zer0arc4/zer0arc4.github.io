@@ -32,7 +32,7 @@
     "name": {{ $siteName | jsonify }},
     "jobTitle": {{ .Site.Params.brand.title | jsonify }},
     "url": {{ .Site.BaseURL | jsonify }},
-    "email": {{ site.Data.site.email | jsonify }},
+    "email": {{ hugo.Data.site.email | jsonify }},
     "image": {{ (.Site.Params.brand.logo | default "/images/logo.svg") | absURL | jsonify }},
     "sameAs": [
       {{ .Site.Params.social.github | jsonify }},
@@ -70,8 +70,6 @@
   "programmingLanguage": {{ .Params.technologies | default slice | jsonify }}
 }
 </script>
-{{- else if and (eq .Section "blog") .IsPage -}}
-{{ partial "schema/article.html" . }}
 {{- else if and .File (hasPrefix .File.Dir "writeups/") .IsPage -}}
 {{ partial "schema/article.html" . }}
 {{- else if and (eq .Section "notes") .IsPage -}}

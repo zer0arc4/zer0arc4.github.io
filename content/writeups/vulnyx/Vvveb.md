@@ -9,7 +9,7 @@ os: "Linux"
 status: "active"
 featured: true
 featured_image: "/images/writeups/vulnyx/Vvveb.png"
-tags: ["linux", "web-enumeration", "vvveb", "vvveb-cms", "(CVE-2025-8518)", "ffuf", "information-disclosure", cyberchef", "rce", "reverse-shell", "ssh", "credential-reuse", "sudo", "dpkg", "fpm", "debian-package", "privilege-escalation"]
+tags: ["linux", "web-enumeration", "vvveb", "vvveb-cms", "cve-2025-8518", "ffuf", "information-disclosure", "cyberchef", "rce", "reverse-shell", "ssh", "credential-reuse", "sudo", "dpkg", "fpm", "debian-package", "privilege-escalation"]
 skills: ["arp-scan", "nmap", "ffuf", "curl", "vvveb-cms", "web-enumeration", "cyberchef", "php", "rce", "netcat", "linux-enumeration", "ssh", "credential-enumeration", "john-the-ripper", "ssh2john", "sudo", "dpkg", "fpm", "privilege-escalation"]
 comments: false
 draft: false

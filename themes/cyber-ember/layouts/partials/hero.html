@@ -27,7 +27,7 @@
         {{ .Site.Params.brand.title }}
       </p>
       <p class="text-text-secondary text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-        {{ site.Data.site.intro | markdownify }}
+        {{ hugo.Data.site.intro | markdownify }}
       </p>
       <div class="flex flex-wrap justify-center gap-4">
         <a href="{{ .Site.Params.social.github }}" target="_blank" rel="noopener noreferrer" class="btn-primary">

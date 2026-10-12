@@ -630,27 +630,48 @@ video {
     box-shadow: var(--glow-subtle);
     transform: translateY(-2px);
   }
-.share-link {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 10;
+.share-section {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+.share-btn {
   display: inline-flex;
-  height: 2rem;
-  width: 2rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
+  padding: 0.5rem;
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity, 1));
-    background: rgba(11, 15, 25, 0.72);
-    border: 1px solid var(--color-border);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
-.share-link:hover,
-  .share-link-copied {
-  --tw-text-opacity: 1;
-  color: rgb(255 107 0 / var(--tw-text-opacity, 1));
-    border-color: rgba(255, 107, 0, 0.5);
+.share-btn:hover {
+    transform: translateY(-2px);
+  }
+.share-btn:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 4px;
+  }
+.share-btn-copied {
+    color: #4ade80 !important;
+    transform: scale(1.1);
+  }
+.share-notification {
+  font-family: JetBrains Mono, Fira Code, monospace;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 .code-block {
   position: relative;
@@ -1897,6 +1918,9 @@ video {
 .max-h-\[calc\(100vh-var\(--header-offset\)-2rem\)\] {
   max-height: calc(100vh - var(--header-offset) - 2rem);
 }
+.min-h-\[1\.25rem\] {
+  min-height: 1.25rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -2022,6 +2046,9 @@ video {
 }
 .gap-4 {
   gap: 1rem;
+}
+.gap-5 {
+  gap: 1.25rem;
 }
 .gap-6 {
   gap: 1.5rem;
@@ -2175,14 +2202,15 @@ video {
   padding-top: 6rem;
   padding-bottom: 6rem;
 }
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 .pb-4 {
   padding-bottom: 1rem;
 }
 .pl-12 {
   padding-left: 3rem;
-}
-.pr-10 {
-  padding-right: 2.5rem;
 }
 .pr-8 {
   padding-right: 2rem;
@@ -2210,6 +2238,10 @@ video {
 .text-6xl {
   font-size: 3.75rem;
   line-height: 1;
+}
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 .text-lg {
   font-size: 1.125rem;
@@ -2241,6 +2273,9 @@ video {
 .leading-tight {
   line-height: 1.25;
 }
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
 .tracking-wider {
   letter-spacing: 0.05em;
 }
@@ -2251,6 +2286,10 @@ video {
 .text-ember-soft {
   --tw-text-opacity: 1;
   color: rgb(255 183 77 / var(--tw-text-opacity, 1));
+}
+.text-green-400 {
+  --tw-text-opacity: 1;
+  color: rgb(74 222 128 / var(--tw-text-opacity, 1));
 }
 .text-red-400 {
   --tw-text-opacity: 1;
@@ -2267,6 +2306,12 @@ video {
 .text-text-secondary {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity, 1));
+}
+.opacity-0 {
+  opacity: 0;
+}
+.opacity-100 {
+  opacity: 1;
 }
 .opacity-20 {
   opacity: 0.2;
@@ -2306,6 +2351,11 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 .transition-shadow {
   transition-property: box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -2341,9 +2391,25 @@ video {
 .hover\:bg-ember-primary\/30:hover {
   background-color: rgb(255 107 0 / 0.3);
 }
+.hover\:text-\[\#0A66C2\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(10 102 194 / var(--tw-text-opacity, 1));
+}
+.hover\:text-\[\#24A1DE\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(36 161 222 / var(--tw-text-opacity, 1));
+}
+.hover\:text-\[\#5865F2\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(88 101 242 / var(--tw-text-opacity, 1));
+}
 .hover\:text-ember-primary:hover {
   --tw-text-opacity: 1;
   color: rgb(255 107 0 / var(--tw-text-opacity, 1));
+}
+.hover\:text-text-primary:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 .hover\:underline:hover {
   text-decoration-line: underline;
@@ -2351,6 +2417,11 @@ video {
 .group:hover .group-hover\:scale-105 {
   --tw-scale-x: 1.05;
   --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.group:hover .group-hover\:scale-110 {
+  --tw-scale-x: 1.1;
+  --tw-scale-y: 1.1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .group:hover .group-hover\:text-ember-primary {
@@ -2384,9 +2455,18 @@ video {
     flex-direction: row;
   }
 
+  .sm\:gap-7 {
+    gap: 1.75rem;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 @media (min-width: 768px) {

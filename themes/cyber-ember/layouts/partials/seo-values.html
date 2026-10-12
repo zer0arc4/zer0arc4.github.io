@@ -29,7 +29,7 @@
 
 {{- $ogType := "website" -}}
 {{- if .IsPage -}}
-  {{- if or (eq .Section "blog") (and .File (hasPrefix .File.Dir "writeups/")) -}}
+  {{- if and .File (hasPrefix .File.Dir "writeups/") -}}
     {{- $ogType = "article" -}}
   {{- end -}}
 {{- end -}}

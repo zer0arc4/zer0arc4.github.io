@@ -1,4 +1,4 @@
 ---
 title: "Activity"
-description: "Complete activity history — writeups, projects, and blog posts sorted by newest first."
+description: "Complete activity history — writeups and projects sorted by newest first."
 ---

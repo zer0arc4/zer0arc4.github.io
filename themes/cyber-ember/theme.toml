@@ -3,7 +3,7 @@ license = 'MIT'
 licenselink = 'https://github.com/zer0arc4/zer0arc4.github.io/blob/main/LICENSE'
 description = 'A premium dark-first cybersecurity portfolio theme for Hugo'
 homepage = 'https://zer0arc4.github.io/'
-tags = ['portfolio', 'blog', 'dark', 'cybersecurity', 'tailwind']
+tags = ['portfolio', 'dark', 'cybersecurity', 'tailwind']
 features = ['search', 'comments', 'stats', 'activity-timeline']
 min_version = '0.120.0'
 

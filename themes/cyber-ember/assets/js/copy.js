@@ -43,28 +43,118 @@
     });
   }
 
-  function enhanceShareLinks() {
-    document.querySelectorAll('[data-share-url]').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-        e.preventDefault();
-        e.stopPropagation();
-        copyText(el.getAttribute('data-share-url') || el.href).then(() => {
-          const prev = el.getAttribute('title');
-          el.setAttribute('title', 'Link copied');
-          el.classList.add('share-link-copied');
-          window.setTimeout(() => {
-            el.setAttribute('title', prev || 'Copy link to this page');
-            el.classList.remove('share-link-copied');
-          }, 1600);
+  function enhanceShareSection() {
+    const sections = document.querySelectorAll('[data-share-section]');
+    if (!sections.length) return;
+
+    sections.forEach((section) => {
+      const notification = section.querySelector('.share-notification');
+      let notifyTimeout = null;
+
+      function showNotification(msg, isError) {
+        if (!notification) return;
+        notification.textContent = msg;
+        notification.classList.remove('opacity-0', 'text-ember-soft', 'text-red-400', 'text-green-400');
+        notification.classList.add(isError ? 'text-red-400' : 'text-ember-soft', 'opacity-100');
+        clearTimeout(notifyTimeout);
+        notifyTimeout = setTimeout(() => {
+          notification.classList.remove('opacity-100');
+          notification.classList.add('opacity-0');
+        }, 3500);
+      }
+
+      // Synchronize dynamic URLs for native share links
+      const currentUrl = window.location.href;
+      const currentTitle = document.title || '';
+
+      const linkedinBtn = section.querySelector('[data-share-channel="linkedin"]');
+      if (linkedinBtn) {
+        linkedinBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`;
+      }
+
+      const xBtn = section.querySelector('[data-share-channel="x"]');
+      if (xBtn) {
+        xBtn.href = `https://x.com/intent/post?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`;
+      }
+
+      const telegramBtn = section.querySelector('[data-share-channel="telegram"]');
+      if (telegramBtn) {
+        telegramBtn.href = `https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(currentTitle)}`;
+      }
+
+      // Discord
+      const discordBtn = section.querySelector('[data-share-channel="discord"]');
+      if (discordBtn) {
+        discordBtn.addEventListener('click', () => {
+          copyText(window.location.href)
+            .then(() => {
+              showNotification('Link copied to clipboard! Opening Discord to paste in your server or message.', false);
+            })
+            .catch(() => {
+              showNotification('Opening Discord. You can copy the URL directly from your browser bar.', false);
+            });
         });
-      });
+      }
+
+      // GitHub
+      const githubBtn = section.querySelector('[data-share-channel="github"]');
+      if (githubBtn) {
+        githubBtn.addEventListener('click', () => {
+          copyText(window.location.href)
+            .then(() => {
+              showNotification('Link copied to clipboard! Opening GitHub repository.', false);
+            })
+            .catch(() => {
+              showNotification('Opening GitHub. You can copy the URL directly from your browser bar.', false);
+            });
+        });
+      }
+
+      // Copy Link Button
+      const copyBtn = section.querySelector('[data-share-channel="copy"]');
+      if (copyBtn) {
+        const labelEl = copyBtn.querySelector('.share-btn-label');
+        const defaultIcon = copyBtn.querySelector('.share-icon-default');
+        const successIcon = copyBtn.querySelector('.share-icon-success');
+        const originalLabel = labelEl ? labelEl.textContent : 'Copy Link';
+        let copyTimeout = null;
+
+        copyBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          copyText(window.location.href)
+            .then(() => {
+              copyBtn.classList.add('share-btn-copied');
+              if (labelEl) labelEl.textContent = 'Copied!';
+              if (defaultIcon) defaultIcon.classList.add('hidden');
+              copyBtn.setAttribute('title', 'Link copied!');
+              copyBtn.setAttribute('aria-label', 'Link copied!');
+              showNotification('Link copied to clipboard!', false);
+
+              clearTimeout(copyTimeout);
+              copyTimeout = setTimeout(() => {
+                copyBtn.classList.remove('share-btn-copied');
+                if (labelEl) labelEl.textContent = originalLabel;
+                if (defaultIcon) defaultIcon.classList.remove('hidden');
+                if (successIcon) successIcon.classList.add('hidden');
+                copyBtn.setAttribute('title', 'Copy link to clipboard');
+                copyBtn.setAttribute('aria-label', 'Copy link to clipboard');
+              }, 2000);
+            })
+            .catch(() => {
+              if (labelEl) labelEl.textContent = 'Failed';
+              showNotification('Unable to copy automatically. Please copy the URL from your browser address bar.', true);
+              setTimeout(() => {
+                if (labelEl) labelEl.textContent = originalLabel;
+              }, 2500);
+            });
+        });
+      }
     });
   }
 
   function init() {
     enhanceCodeBlocks();
-    enhanceShareLinks();
+    enhanceShareSection();
   }
 
   if (document.readyState === 'loading') {

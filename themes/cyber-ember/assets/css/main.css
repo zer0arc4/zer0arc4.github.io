@@ -72,16 +72,35 @@
     transform: translateY(-2px);
   }
 
-  .share-link {
-    @apply absolute top-3 right-3 z-10 inline-flex items-center justify-center w-8 h-8 rounded-lg text-text-muted;
-    background: rgba(11, 15, 25, 0.72);
-    border: 1px solid var(--color-border);
+  .share-section {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
-  .share-link:hover,
-  .share-link-copied {
-    @apply text-ember-primary;
-    border-color: rgba(255, 107, 0, 0.5);
+  .share-btn {
+    @apply inline-flex items-center justify-center p-2 rounded-lg transition-all duration-200 select-none cursor-pointer text-text-muted;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .share-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .share-btn:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 4px;
+  }
+
+  .share-btn-copied {
+    color: #4ade80 !important;
+    transform: scale(1.1);
+  }
+
+  .share-notification {
+    @apply text-xs font-mono transition-opacity duration-300;
   }
 
   .code-block {
@@ -143,10 +162,6 @@
 
   .badge-easy { @apply bg-green-500/20 text-green-400; }
   .badge-low { @apply bg-blue-500/20 text-blue-400; }
-  .badge-low {
-  background-color: rgb(59 130 246 / 0.2);
-  color: rgb(96 165 250);
-}
   .badge-medium { @apply bg-ember-secondary/20 text-ember-secondary; }
   .badge-hard { @apply bg-red-500/20 text-red-400; }
   .badge-insane { @apply bg-purple-500/20 text-purple-400; }

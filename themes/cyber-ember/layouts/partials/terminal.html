@@ -1,4 +1,4 @@
-{{- $terminal := site.Data.terminal -}}
+{{- $terminal := hugo.Data.terminal -}}
 {{- $commandsJSON := dict -}}
 {{- range $key, $val := $terminal.commands -}}
   {{- $commandsJSON = merge $commandsJSON (dict $key (dict "output" $val.output "action" ($val.action | default ""))) -}}

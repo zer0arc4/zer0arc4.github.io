@@ -6,7 +6,7 @@
   "alternateName": "zer0arc4",
   "jobTitle": {{ .Site.Params.brand.title | jsonify }},
   "url": {{ .Site.BaseURL | jsonify }},
-  "email": {{ site.Data.site.email | jsonify }},
+  "email": {{ hugo.Data.site.email | jsonify }},
   "image": {{ (.Site.Params.brand.logo | default "/images/logo.svg") | absURL | jsonify }},
   "sameAs": [
     {{ .Site.Params.social.github | jsonify }},

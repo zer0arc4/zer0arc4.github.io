@@ -4,9 +4,8 @@
     <div class="max-w-4xl">
       {{ partial "breadcrumbs.html" . }}
 
-      <header class="mb-8 relative">
-        <h1 class="text-4xl font-bold text-text-primary mb-4 pr-10">{{ .Title }}</h1>
-        {{ partial "share-link.html" . }}
+      <header class="mb-8">
+        <h1 class="text-4xl font-bold text-text-primary mb-4">{{ .Title }}</h1>
         <div class="flex flex-wrap items-center gap-4 text-sm text-text-muted">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
           <span>{{ .ReadingTime }} min read</span>
@@ -29,9 +28,13 @@
         {{ .Content }}
       </div>
 
+      
+
       {{ if .Site.Params.features.author_box }}
         {{ partial "author-box.html" . }}
       {{ end }}
+      
+      {{ partial "share-section.html" . }}
 
       {{ if .Site.Params.features.related_posts }}
         {{ partial "related-posts.html" . }}

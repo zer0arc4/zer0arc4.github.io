@@ -35,7 +35,6 @@ tagline = 'Documenting my journey through cybersecurity, penetration testing, CT
   lang = 'en'
   reactions = true
   writeups_default = false
-  blog_default = true
   notes_default = true
 
 # Search — Pagefind
@@ -67,7 +66,6 @@ tagline = 'Documenting my journey through cybersecurity, penetration testing, CT
     'hero',
     'featured_writeups',
     'featured_projects',
-    'latest_articles',
     'stats',
     'activity_timeline',
     'contact_cta',
